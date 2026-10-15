@@ -156,6 +156,11 @@ per-file diff commands.
   derive both checks from the shipped files, so a renamed heading fails until `/reset`
   follows it; both fail on master.
 
+- **`freehire-search` rejects empty `--facet` filters before requesting jobs** (#561) -
+  a bare flag (including one after a valid repeated facet), `salary_min=`, or a
+  comma-separated value list containing only whitespace now returns `BAD_ARG` and
+  exits 1 instead of silently dropping the filter and running a broader search.
+
 - **The `/apply` host-check test derives its installed-portal hosts from the skills tree
   instead of a hand-copied set** (#497, `tests/test_apply_host_check.py`) - `SHIPPED_PORTAL_HOSTS`
   was six names typed into the test and nothing tied it to anything: a portal added by
