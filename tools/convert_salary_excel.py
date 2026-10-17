@@ -46,8 +46,9 @@ INDEX_PATTERNS = {"indeks", "index", "idx", "salary", "løn", "median", "average
 # header token, for languages that glue words together (e.g. Danish "lønindeks"
 # -> løn + indeks). Languages that write headers as separate words need none.
 # Ships populated for this repo's Danish demonstration data; a fork targeting
-# another locale edits this constant.
-COMPOUND_PATTERNS = {"antal", "indeks", "løn", "gennemsnit", "medarbejdere"}
+# another locale edits this constant. "firma" is here because the IDA workbook
+# heads its company column "Firmanavn og by" (firma + navn glued together).
+COMPOUND_PATTERNS = {"firma", "antal", "indeks", "løn", "gennemsnit", "medarbejdere"}
 # Identifier columns (employee id, Danish "personnummer", etc.) are never salary
 # data. They are dropped at classification so they are not mistaken for a salary
 # category. Matched as whole tokens only, like other pattern sets.

@@ -68,6 +68,17 @@ per-file diff commands.
 
 ### Fixed
 
+- **`convert_salary_excel.py` converts the IDA workbook again** (#615, `tools/convert_salary_excel.py`,
+  `tests/test_convert_salary_excel.py`) - the workbook heads its company column "Firmanavn og by",
+  and since #75 made header matching whole-token only, "firma" no longer matched inside "Firmanavn",
+  so both sheets were skipped with "Could not find header row" and the converter exited 1 on the
+  repository's own demonstration data. "firma" is now a compound token, like the other glued Danish
+  headers; every other workbook converts byte-identically.
+
+- **`/scrape`'s entry schema lists the `unreachable` status** (#615, `.claude/skills/job-scraper/SKILL.md`) -
+  follow-up to #564: the `status` enum in the `seen_jobs.json` schema block still read
+  `new/skipped/ranked/expired` while the dedup rule two sections down already named `unreachable`.
+
 - **`/scrape` names `job_scraper/seen_jobs.json` by its full path in every step** (#608,
   `.claude/skills/job-scraper/SKILL.md`, `tests/test_scrape_seen_jobs_path.py`) - seven references
   after Step 0, including the Step 4 write instruction, used the bare filename, and an assistant

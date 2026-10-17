@@ -161,7 +161,7 @@ It prints one line: the canonical key for that posting. The key must be a pure f
       "posted_date": "YYYY-MM-DD" | null,
       "deadline": "YYYY-MM-DD" | null,
       "fit": "high/medium/low",
-      "status": "new/skipped/ranked/expired",
+      "status": "new/skipped/ranked/expired/unreachable",
       "portal": "<source portal skill, e.g. jobindex-search>",
       "source": "cli/websearch"
     }
