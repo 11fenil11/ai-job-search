@@ -68,6 +68,8 @@ per-file diff commands.
 
 ### Fixed
 
+- **Framework version checks compare marker values using Git-compatible paths on every platform** (#578, `tools/check_framework_version.py`) - quoting or spacing an unchanged version no longer exempts an accompanying guidance edit, hardening a latent bypass without changing legitimate version bumps.
+
 - **`/reset documents` clears nested and hidden user entries while preserving scaffolds** - cleanup retains tracked `.gitkeep` files and the README, with the complete inventory shown before confirmation (#580).
 
 - **`jobindex-search` examples follow the search CLI contract** - the posted-today example includes a required query, unsupported flags are removed, and regression checks accept LF and CRLF checkouts (#579).
