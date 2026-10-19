@@ -131,6 +131,13 @@ per-file diff commands.
   the flag is still a location-only search. The Danish portals (#573) and `freehire-search`
   (#568) already reject a value-less option.
 
+- **`jobindex-search` rejects a `--sort` other than `score` or `date` instead of sending it to the
+  portal** (#647, `.agents/skills/jobindex-search/cli/src/commands/search.ts`,
+  `tests/sort-values.test.ts`) - the option was a free string, and jobindex does not reject an
+  unknown sort: `--sort newest` returned exit 0 in an order that was neither relevance nor date,
+  so the requested newest-first sort was silently not applied. The option is now an enum like
+  `--format`, and any other value exits 1 with the CLI's validation error before any request.
+
 ## [1.7.3] - 2026-10-19
 
 ### Added
