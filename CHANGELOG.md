@@ -213,6 +213,13 @@ per-file diff commands.
   `[WARNING]` that the result used cached data, and never with `[OK]`. A successful fetch and
   `--no-fetch` are unchanged.
 
+- **`fetch_page.py` and `robots_check.py` force UTF-8 stdout to avoid crash on non-Latin web text on Windows**
+  (#686, fixes #685, `tools/fetch_page.py`, `tools/robots_check.py`, `tests/test_tools_utf8_output.py`) - like the other
+  Python tools, both CLI utilities now call `_force_utf8_output()` on startup. Under Windows default ANSI
+  code pages (such as `cp1252`), running `fetch_page.py --text` on postings containing characters outside
+  that code page (e.g. Polish, Cyrillic, or CJK) raised `UnicodeEncodeError` when writing stdout.
+  Similarly, `robots_check.py` now guarantees UTF-8 standard streams across platforms.
+
 ### Security
 
 - **CI no longer leaves the job token in `.git/config` or expands a PR-controlled name into a
