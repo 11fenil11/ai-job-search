@@ -54,6 +54,15 @@ per-file diff commands.
   `north_america`, `latam`, `apac`, `mena`, `africa`, `cis`) plus `none`, note that `eu` excludes
   the UK, and point single-country searches at `--country`.
 
+- **`freehire-search search` warns when `--region` gets a value outside freehire's vocabulary**
+  (#651, fixes #616, `.agents/skills/freehire-search/cli/src/commands/search.ts`, `SKILL.md`,
+  `cli/README.md`) - an unknown region such as `us` or `europe` matches nothing, so the search read
+  as "no postings" rather than "wrong parameter". `search` now checks `--region` and
+  `--facet regions=` against the nine buckets plus `none`, case-insensitively, and prints one
+  `REGION_VALUE_UNKNOWN` warning on stderr that lists the buckets and points a country at
+  `--country`. Results, stdout and the exit code are unchanged, so a bucket freehire adds later
+  still works.
+
 ## [1.7.3] - 2026-10-19
 
 ### Added

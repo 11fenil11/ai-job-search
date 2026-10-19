@@ -169,6 +169,11 @@ result carries at least `id` (the freehire slug), `title`, `company`, `location`
 omit the description — it would swamp a scannable list. All errors are written to
 **stderr** as `{ "error": "...", "code": "..." }` and the process exits with code `1`.
 
+One diagnostic is not an error: a `--region` (or `--facet regions=`) value outside the
+documented vocabulary - `us` is a country code, not a region - prints
+`{ "warning": "...", "code": "REGION_VALUE_UNKNOWN" }` on **stderr** after the results,
+and the process still exits `0` with stdout a valid JSON document.
+
 ## Partial data
 
 Facets are derived per-posting and can be **incomplete** — geography especially.

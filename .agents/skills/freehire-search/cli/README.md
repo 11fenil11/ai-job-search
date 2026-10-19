@@ -43,6 +43,9 @@ Compose (`make up` → API on `:8080`, same `/api/v1/...` paths).
 
 `search` accepts `--format json|table|plain` (default `json`); `detail` accepts `--format json|plain`.
 All errors are written to **stderr** as `{ "error": "...", "code": "..." }` with exit code `1`.
+One diagnostic is a warning instead: a `--region` value outside the documented vocabulary
+prints `{ "warning": "...", "code": "REGION_VALUE_UNKNOWN" }` to stderr after the results,
+and exits `0`, leaving stdout a valid JSON document.
 
 `search` hits the API's agent endpoint, so every JSON result already carries the
 posting's **full** description (Markdown by default, `--description-format
