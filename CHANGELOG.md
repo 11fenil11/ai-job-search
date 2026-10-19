@@ -138,6 +138,14 @@ per-file diff commands.
   so the requested newest-first sort was silently not applied. The option is now an enum like
   `--format`, and any other value exits 1 with the CLI's validation error before any request.
 
+- **`jobnet-search search --occupation` filters by the ESCO occupation that `occupations` prints**
+  (#649, `.agents/skills/jobnet-search/cli/src/commands/search.ts`, `tests/occupation-filter-cli.test.ts`,
+  `SKILL.md`, `cli/README.md`) - the skill and README said to pass the `conceptUriDa` UUID from
+  `occupations` to `--occupation-area` / `--occupation-group`, but those take the numeric area and
+  group codes (`10000`, `10060`); a UUID there returned a successful search with zero ads, while the
+  API's `occupations` parameter returns the 830 nurse ads for the same UUID. The new flag sends that
+  parameter and accepts the full URI or the bare UUID; the docs stop pointing at the numeric flags.
+
 ## [1.7.3] - 2026-10-19
 
 ### Added
