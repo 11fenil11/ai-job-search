@@ -102,6 +102,12 @@ per-file diff commands.
   longer paired with its count column and `salary_lookup.py` printed the label across two lines.
   Header whitespace runs now collapse to one space, so a wrapped header converts like its one-line spelling.
 
+- **Salary workbook conversion skips prose notes tabs** (#644, `tools/convert_salary_excel.py`,
+  `tests/test_salary_notes_sheet_cli.py`) - a "Notes" tab mentioning "company" in a sentence was
+  taken as a header row by the fallback pass, and every following sentence was emitted as a company
+  in `salary_data.json` and `--list-all`. A fallback-detected header with no salary column beside it
+  now skips the sheet with a warning; strictly detected headers are unchanged.
+
 ## [1.7.3] - 2026-10-19
 
 ### Added
