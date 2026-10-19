@@ -179,6 +179,14 @@ per-file diff commands.
   Poppler installed. It now probes each distinct `pdftotext` on PATH with `-h`, runs the first that
   lists `-bbox` by its full path, and keeps the `skipped:` exit 2 for when none does.
 
+- **`/notion-sync` can set a page's Status to `expired`** (#666, fixes #597) (`.claude/commands/notion-sync.md` Steps 2-5,
+  `tests/test_notion_sync_command.py`) - Step 2 built the sync set from `ranked` entries and tracker rows only, so a job
+  synced while ranked and later retired by `/rank`'s sweep never re-entered the set and its page stayed `ranked`, although
+  Step 4 says to set Status to `expired`. `expired` entries now join the sync set as update-only candidates: a matching page
+  gets Status `expired` and nothing else, a Key with no page is skipped rather than created, no body is written for them even
+  under `--rebuild`, and a first run with only such entries stops before creating the database. An expired posting with a
+  tracker row still syncs as an ordinary row.
+
 ## [1.7.3] - 2026-10-19
 
 ### Added
