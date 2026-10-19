@@ -122,6 +122,15 @@ per-file diff commands.
   with exit 0 and an empty stderr. Anything other than `remote`, `hybrid` or `onsite` (and the
   accepted `on-site` spelling) now exits 1 with `BAD_ARG` before any request is sent.
 
+- **`linkedin-search` requires a value for `--query` instead of dropping the keywords**
+  (#646, `.agents/skills/linkedin-search/cli/src/cli.ts`, `tests/required-query-value.test.ts`) - the
+  flag parser stores a bare `-q` as `true` and `-q ""` as an empty string, and the search took
+  `--query` only when it was a non-empty string, so a bare flag, an empty argument (an unset
+  shell variable) or a blank query returned every posting in the location with exit 0. A present
+  `--query` now needs a non-empty value or exits 1 with `BAD_ARG` before any request; omitting
+  the flag is still a location-only search. The Danish portals (#573) and `freehire-search`
+  (#568) already reject a value-less option.
+
 ## [1.7.3] - 2026-10-19
 
 ### Added
