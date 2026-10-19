@@ -146,6 +146,16 @@ per-file diff commands.
   API's `occupations` parameter returns the 830 nurse ads for the same UUID. The new flag sends that
   parameter and accepts the full URI or the bare UUID; the docs stop pointing at the numeric flags.
 
+- **`jobdanmark-search search` can filter by the administrative regions that `locations` returns**
+  (#650, `.agents/skills/jobdanmark-search/cli/src/commands/search.ts`, `tests/region-filter-cli.test.ts`,
+  `SKILL.md`, `cli/README.md`) - `locations` lists two kinds of region: landsdele such as `Østjylland`
+  (category `region`) and the five administrative regions such as `Region Midtjylland` (category
+  `administrativeRegion`), and the search API filters each by its own type. `--region` always sent
+  type `region`, so an administrative region - and SKILL.md's own example `--region Midtjylland` - came
+  back as a successful search with zero jobs. A new `--administrative-region` flag sends the
+  `administrativeRegion` filter (2,486 jobs for `Region Midtjylland`), and the docs map each `locations`
+  category to its flag and give `--region` examples that exist.
+
 ## [1.7.3] - 2026-10-19
 
 ### Added
