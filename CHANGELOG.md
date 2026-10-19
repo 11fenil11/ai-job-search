@@ -115,6 +115,13 @@ per-file diff commands.
   lookup then failed and `/apply` quietly dropped the benchmark. The converter now exits 2 before
   reading the workbook or opening the output, and `0` or a finite custom baseline still converts.
 
+- **`linkedin-search` rejects a `--remote` mode it does not recognise instead of searching every
+  workplace type** (#645, `.agents/skills/linkedin-search/cli/src/cli.ts`, `tests/remote-mode.test.ts`) -
+  `workTypeFlag()` maps an unknown mode to `null` and the request then carries no `f_WT`, so
+  `--remote remote,hybrid`, a misspelt mode or a bare `--remote` returned onsite postings too,
+  with exit 0 and an empty stderr. Anything other than `remote`, `hybrid` or `onsite` (and the
+  accepted `on-site` spelling) now exits 1 with `BAD_ARG` before any request is sent.
+
 ## [1.7.3] - 2026-10-19
 
 ### Added
