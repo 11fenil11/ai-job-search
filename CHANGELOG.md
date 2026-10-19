@@ -72,6 +72,11 @@ per-file diff commands.
   `--country`. Results, stdout and the exit code are unchanged, so a bucket freehire adds later
   still works.
 
+- **`job_key.py --audit` reports an entry whose `url` is not a string** (#634, `tools/job_key.py`,
+  `tests/test_job_key.py`) - a numeric, list or object `url` crashed the duplicate-URL pass with an
+  `AttributeError` traceback on `.rstrip`, although the audit already reports other malformed state
+  with a one-line error and exit 1. It now names the offending key the same way.
+
 ## [1.7.3] - 2026-10-19
 
 ### Added
