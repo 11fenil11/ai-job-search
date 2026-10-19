@@ -77,6 +77,12 @@ per-file diff commands.
   `AttributeError` traceback on `.rstrip`, although the audit already reports other malformed state
   with a one-line error and exit 1. It now names the offending key the same way.
 
+- **`rank_state.py apply` reports a malformed scoring result instead of crashing** (#635, `tools/rank_state.py`,
+  `tests/test_rank_state.py`) - a result that is not an object, a `key` that is not a string, or a
+  `scores` value that is not an object raised an `AttributeError`/`TypeError` traceback and discarded the
+  whole batch, although `apply` already collects per-result problems in `errors`. Each now becomes an
+  `errors` row (exit 1) and the valid results in the same file are still written.
+
 ## [1.7.3] - 2026-10-19
 
 ### Added
