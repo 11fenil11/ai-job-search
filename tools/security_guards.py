@@ -349,7 +349,7 @@ def check_skill_tool_grants() -> None:
             errors.append(f"{rel}: missing or unterminated frontmatter (expected --- ... ---)")
             continue
         # A portal skill may grant exactly its own CLI and nothing else - that is
-        # the promise SECURITY.md makes, and portals are leaving the tree anyway.
+        # the promise SECURITY.md makes.
         own_cli = _own_cli_grant(path)
         permitted = own_cli if own_cli else ALLOWED_SKILL_TOOLS
         for entry in _tool_entries(data.get("allowed-tools", "")):
