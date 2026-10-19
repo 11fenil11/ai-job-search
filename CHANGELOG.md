@@ -96,6 +96,12 @@ per-file diff commands.
   "newly expired" by the sweep, then re-ranked by `apply` from its fresh deadline, so the same job appeared
   as both expired and shortlisted. Keys are now stripped before matching.
 
+- **Salary workbook conversion handles wrapped header cells** (#643, `tools/convert_salary_excel.py`,
+  `tests/test_salary_wrapped_header_cli.py`) - a header cell with a line break inside it
+  ("Median⏎salary", "Løn-⏎indeks") kept the break in the derived category name, so the column no
+  longer paired with its count column and `salary_lookup.py` printed the label across two lines.
+  Header whitespace runs now collapse to one space, so a wrapped header converts like its one-line spelling.
+
 ## [1.7.3] - 2026-10-19
 
 ### Added
