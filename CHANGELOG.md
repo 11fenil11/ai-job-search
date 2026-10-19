@@ -13,6 +13,23 @@ per-file diff commands.
 
 ## [Unreleased]
 
+### Fixed
+
+- **`freehire-search detail` no longer asks the API for a slug cut out of a URL on another
+  host** (#623, fixes #622, `.agents/skills/freehire-search/cli/src/helpers.ts`, `tests/parsing.test.ts`,
+  `tests/commands.test.ts`, `SKILL.md`) - `normalizeSlug` took the segment after `/jobs/` from
+  *any* string, so a Greenhouse apply link - which is what a freehire search result's own `url`
+  field carries - was reduced to its last path segment and `detail` requested
+  `/api/v1/jobs/1`, then reported `NOT_FOUND` for a URL that was never a freehire posting.
+  Every other portal CLI rejects an off-host detail URL with `BAD_ID` (#447, #430, #499);
+  freehire was the last one trusting the path. URLs are now parsed for real: `freehire.me`
+  (apex or any subdomain, scheme optional) or the host of `FREEHIRE_API_URL` for a self-hosted
+  instance, plus a `/jobs/<slug>` path and nothing more, yields the slug; other hosts,
+  look-alike and userinfo hosts, and non-job freehire pages exit 1 with `BAD_ID` before any
+  request. Bare slugs are unchanged. Pinned by six new `normalizeSlug` cases and a
+  handler-level test that pastes the search fixture's own apply URL into `detail` with fetch
+  stubbed; the off-host cases fail on master.
+
 ## [1.7.3] - 2026-10-19
 
 ### Added
