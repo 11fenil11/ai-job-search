@@ -29,9 +29,29 @@ export interface Envelope<T> {
   error?: string
 }
 
+// The most apiGet sleeps across all retries of one request. Its own backoff
+// schedule (500ms doubling to 8s, six retries) stays under it; a Retry-After
+// that would push past it fails the request at once instead, so an outage still
+// degrades this source quickly rather than outlasting the caller's tool timeout.
+const RETRY_BUDGET_MS = 30_000
+
+/**
+ * The wait a 429/503 asks for via `Retry-After`, in ms, or null when absent or
+ * unreadable. Accepts both RFC 9110 forms: delta-seconds and an HTTP-date.
+ */
+export function retryAfterMs(header: string | null, now = Date.now()): number | null {
+  if (!header) return null
+  const value = header.trim()
+  if (/^\d+$/.test(value)) return Number(value) * 1000
+  const date = Date.parse(value)
+  if (Number.isNaN(date)) return null
+  return Math.max(date - now, 0)
+}
+
 /**
  * GET a JSON envelope from the freehire API. Retries 429/5xx (transient server
- * states) with backoff; returns `null` on a 404. A connection failure fails fast
+ * states) with backoff, waiting at least as long as a `Retry-After` header asks
+ * within a total budget of RETRY_BUDGET_MS; returns `null` on a 404. A connection failure fails fast
  * with a clear message — no retry, so an outage degrades this source quickly
  * rather than hanging the caller (the graceful-degradation contract).
  */
@@ -39,6 +59,7 @@ export async function apiGet<T>(path: string): Promise<Envelope<T> | null> {
   const url = `${baseUrl()}${path}`
   const maxRetries = 6
   let delay = 500
+  let waited = 0
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     let response: Response
@@ -59,7 +80,17 @@ export async function apiGet<T>(path: string): Promise<Envelope<T> | null> {
       if (attempt === maxRetries) {
         throw new Error(`freehire API request failed: ${response.status} ${response.statusText}`)
       }
-      await sleep(delay + Math.floor(Math.random() * 500))
+      const backoff = delay + Math.floor(Math.random() * 500)
+      const retryAfter = retryAfterMs(response.headers.get("Retry-After"))
+      const wait = Math.max(backoff, retryAfter ?? 0)
+      if (waited + wait > RETRY_BUDGET_MS) {
+        throw new Error(
+          `freehire API request failed: ${response.status} ${response.statusText}; ` +
+            `the server asked to retry in ${Math.ceil(wait / 1000)}s, past this CLI's ${RETRY_BUDGET_MS / 1000}s retry budget`,
+        )
+      }
+      await sleep(wait)
+      waited += wait
       delay = Math.min(delay * 2, 8000)
       continue
     }
