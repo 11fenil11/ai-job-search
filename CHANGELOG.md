@@ -308,6 +308,11 @@ per-file diff commands.
   now a date pair; `1500–2000` and `2000–5000` stay quantities. Two new `test_verify_pdf.py`
   cases; the date-pair one fails on master.
 
+- **Excel logical cells no longer become salary numbers** (#664, `tools/convert_salary_excel.py`) -
+  `TRUE` and `FALSE` cells are skipped as non-numeric instead of turning into counts or
+  salary indices of 1 and 0. Numeric 0 and 1 remain valid, and a count/index pair retains
+  its numeric half when the other cell is logical.
+
 ### Security
 
 - **CI no longer leaves the job token in `.git/config` or expands a PR-controlled name into a
