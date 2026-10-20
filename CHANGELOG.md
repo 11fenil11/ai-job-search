@@ -271,6 +271,13 @@ per-file diff commands.
   `x=ok; test "$x" = ok`, Git for Windows' own Bash is tried when the launcher fails the probe, and the
   replay checks skip only when no usable shell is found.
 
+- **Jobbank and Jobnet `detail` reject posting URLs on other hosts** (#672,
+  `.agents/skills/jobbank-search/cli/src/helpers.ts`, `.agents/skills/jobnet-search/cli/src/helpers.ts`) -
+  previously, a matching `/job/<id>` or `/find-job/<id>` path on any website was silently interpreted as
+  a posting on the selected portal. Both CLIs now require an HTTP(S) URL on their own domain and extract
+  the ID from its pathname only. Bare IDs, portal links without a scheme, portal subdomains, and Jobnet's
+  legacy posting routes remain valid.
+
 ### Security
 
 - **CI no longer leaves the job token in `.git/config` or expands a PR-controlled name into a
