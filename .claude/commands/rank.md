@@ -26,6 +26,8 @@ Follow these steps **in order**.
 
 Never read `job_scraper/seen_jobs.json` into the conversation. It holds every job the workspace has ever seen - most of it `skipped` - while a run only ever touches the handful of entries being scored, so a manual read costs the whole backlog on every run and grows for the life of the workspace. Selecting candidates is a query, so run the query:
 
+> **Windows:** run these tools as `python`, not `python3`. A python.org install ships no `python3`, so that name reaches the Microsoft Store alias, which either exits 49 with no output (#669) or starts a separate Store Python without the packages `pip` installed (such as pypdf). `.claude/settings.json` allows both spellings.
+
 ```bash
 python3 tools/rank_state.py candidates --limit 10          # add --all / --focus "<text>" per Step 0
 ```
