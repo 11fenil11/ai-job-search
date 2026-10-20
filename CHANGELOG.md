@@ -288,6 +288,19 @@ per-file diff commands.
   characters are quoted whole as before. One new case fails on master; the short-line case
   pins the unchanged behaviour.
 
+- **Jobnet CLI detail command emits degraded search summary signal on stdout** (#550, fixes #549,
+  `.agents/skills/jobnet-search/cli/src/commands/detail.ts`,
+  `.agents/skills/jobnet-search/cli/tests/detail-fallback.test.ts`,
+  `.agents/skills/jobnet-search/cli/tests/detail-formatting.test.ts`,
+  `.agents/skills/jobnet-search/cli/README.md`) - when `runDetail`
+  resolved an external ad via the search endpoint fallback introduced in #432, it wrote an
+  informational note directly to `process.stderr`. To keep `jobnet-search` stderr behavior
+  consistent with the other portal CLIs (silent `stderr` on exit 0), the signal that detail
+  was synthesized from search results has moved to `stdout` as a `source: "search-fallback"`
+  field on the detail object, rendered in plain and table output as `Source: search-fallback
+  (detail unavailable, synthesised from search)`, documented in the CLI README, and covered
+  by automated tests.
+
 ### Security
 
 - **CI no longer leaves the job token in `.git/config` or expands a PR-controlled name into a
