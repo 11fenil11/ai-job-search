@@ -278,6 +278,16 @@ per-file diff commands.
   the ID from its pathname only. Bare IDs, portal links without a scheme, portal subdomains, and Jobnet's
   legacy posting routes remain valid.
 
+- **`posting_guard.py` quotes the part of a long line that triggered the flag**
+  (#704, `tools/posting_guard.py`, `tests/test_posting_guard.py`) - the excerpt was a fixed
+  `line[:200]`, so when the trigger sat later in a long paragraph the user saw a ⚠ with 200
+  characters of ordinary company prose and nothing suspicious in them. `apply.md` relies on
+  the quote to let the user dismiss a flag in a second, and WebFetch paragraphs and portal
+  plain output routinely run past 200 characters. The excerpt is now a window of the same
+  length around the first match, with `…` marking a cut at either end; lines up to 200
+  characters are quoted whole as before. One new case fails on master; the short-line case
+  pins the unchanged behaviour.
+
 ### Security
 
 - **CI no longer leaves the job token in `.git/config` or expands a PR-controlled name into a
