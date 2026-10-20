@@ -263,6 +263,14 @@ per-file diff commands.
   `MadsLorentzen/ai-job-search/1.0 (freehire-search)`. The host-check test now lists `github.com` and
   `gist.github.com` postings among the hosts that must stay unverified.
 
+- **The `/reset` replay tests find a Bash that actually runs the script on Windows** (#671,
+  `tests/_bash.py`, `tests/test_bash.py`, `tests/test_reset_command.py`, `tests/test_reset_documents.py`) -
+  the tests replayed the documented `/reset` commands with whichever `bash` came first on PATH. On
+  Windows that is often the WSL launcher, which expands variables before WSL's bash sees them, so the
+  replayed script deleted nothing and two tests failed. Each candidate is now probed with
+  `x=ok; test "$x" = ok`, Git for Windows' own Bash is tried when the launcher fails the probe, and the
+  replay checks skip only when no usable shell is found.
+
 ### Security
 
 - **CI no longer leaves the job token in `.git/config` or expands a PR-controlled name into a
