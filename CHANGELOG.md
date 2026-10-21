@@ -430,6 +430,8 @@ per-file diff commands.
 
 - **Upstream version checks decode Git output as UTF-8** (#587) - future non-Latin framework lines and non-Latin branch names no longer depend on the host code page, guarding a latent case absent from the shipped framework files.
 
+- **`rank_state.py apply` rounds weighted scores exactly** (#588) - decimal half-points such as 31/55/51/96 now produce 60/Good Fit instead of 59/Moderate Fit from binary floating-point drift.
+
 ### Security
 
 - **CI no longer leaves the job token in `.git/config` or expands a PR-controlled name into a
