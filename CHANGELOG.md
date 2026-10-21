@@ -341,6 +341,19 @@ per-file diff commands.
   canonical identity link, which 404s in a browser, and the employer page is `applyUrl` (search) or
   the `Apply:` line of `detail`.
 
+- **`/reset documents` deletes the documents again under zsh** (#699, `.claude/commands/reset.md`
+  Step 3, `tests/test_reset_documents.py`) - the block merged in #580 used the bash-only builtin
+  `shopt -s dotglob nullglob`. Claude Code's Bash tool runs the user's shell, which is zsh on
+  macOS, where the line fails with `command not found: shopt`, and under `set -e` the subshell
+  exits 127 before its deletion loop: the reset reported success and deleted nothing. The
+  replay tests ran the block under `bash` only, so they stayed green. The block is now POSIX
+  shell - explicit directory names instead of brace expansion, and
+  `find <dir> -mindepth 1 -maxdepth 1 ! -name .gitkeep -exec rm -rf -- {} +`, which lists
+  hidden entries and nested folders without any glob setting, skipping a folder that is
+  missing instead of stopping the loop there - and the replay tests run it under every shell
+  present on the machine (bash, zsh, sh, dash), with a missing-folder case and a guard that no
+  bashism returns. The zsh subtests fail on master.
+
 ### Security
 
 - **CI no longer leaves the job token in `.git/config` or expands a PR-controlled name into a
