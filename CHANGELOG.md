@@ -432,6 +432,8 @@ per-file diff commands.
 
 - **`rank_state.py apply` rounds weighted scores exactly** (#588) - decimal half-points such as 31/55/51/96 now produce 60/Good Fit instead of 59/Moderate Fit from binary floating-point drift.
 
+- **`rank_state.py apply` rejects unknown gate verdicts** (#640) - invalid `location_verdict` and `language_gate` values now return an error without shortlisting or writing the entry.
+
 ### Security
 
 - **CI no longer leaves the job token in `.git/config` or expands a PR-controlled name into a
