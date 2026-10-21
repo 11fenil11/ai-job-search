@@ -426,6 +426,8 @@ per-file diff commands.
   most cards and `height:0` alone is a spacer. Three new `Bypasses` cases, seven subtests
   failing on master, plus a calibration case pinning that either half alone stays visible.
 
+- **Upstream triage distinguishes subject-only matches from verified patch matches** (#569) - matching subjects with different patches now name the fork commit and request verification instead of claiming the change was already cherry-picked.
+
 ### Security
 
 - **CI no longer leaves the job token in `.git/config` or expands a PR-controlled name into a
