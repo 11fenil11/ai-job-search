@@ -428,6 +428,8 @@ per-file diff commands.
 
 - **Upstream triage distinguishes subject-only matches from verified patch matches** (#569) - matching subjects with different patches now name the fork commit and request verification instead of claiming the change was already cherry-picked.
 
+- **Upstream version checks decode Git output as UTF-8** (#587) - future non-Latin framework lines and non-Latin branch names no longer depend on the host code page, guarding a latent case absent from the shipped framework files.
+
 ### Security
 
 - **CI no longer leaves the job token in `.git/config` or expands a PR-controlled name into a
