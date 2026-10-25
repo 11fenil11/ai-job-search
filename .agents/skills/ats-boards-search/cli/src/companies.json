@@ -1,0 +1,698 @@
+[
+ {
+  "company": "Databricks",
+  "ats": "greenhouse",
+  "slug": "databricks",
+  "sector": "tech"
+ },
+ {
+  "company": "OpenAI",
+  "ats": "ashby",
+  "slug": "openai",
+  "sector": "tech"
+ },
+ {
+  "company": "Stripe",
+  "ats": "greenhouse",
+  "slug": "stripe",
+  "sector": "tech"
+ },
+ {
+  "company": "Anthropic",
+  "ats": "greenhouse",
+  "slug": "anthropic",
+  "sector": "tech"
+ },
+ {
+  "company": "Datadog",
+  "ats": "greenhouse",
+  "slug": "datadog",
+  "sector": "tech"
+ },
+ {
+  "company": "MongoDB",
+  "ats": "greenhouse",
+  "slug": "mongodb",
+  "sector": "tech"
+ },
+ {
+  "company": "Snowflake",
+  "ats": "ashby",
+  "slug": "snowflake",
+  "sector": "tech"
+ },
+ {
+  "company": "Cloudflare",
+  "ats": "greenhouse",
+  "slug": "cloudflare",
+  "sector": "tech"
+ },
+ {
+  "company": "Elastic",
+  "ats": "greenhouse",
+  "slug": "elastic",
+  "sector": "tech"
+ },
+ {
+  "company": "Brex",
+  "ats": "greenhouse",
+  "slug": "brex",
+  "sector": "tech"
+ },
+ {
+  "company": "Samsara",
+  "ats": "greenhouse",
+  "slug": "samsara",
+  "sector": "tech"
+ },
+ {
+  "company": "GitLab",
+  "ats": "greenhouse",
+  "slug": "gitlab",
+  "sector": "tech"
+ },
+ {
+  "company": "Scale AI",
+  "ats": "greenhouse",
+  "slug": "scaleai",
+  "sector": "tech"
+ },
+ {
+  "company": "Coinbase",
+  "ats": "greenhouse",
+  "slug": "coinbase",
+  "sector": "tech"
+ },
+ {
+  "company": "Affirm",
+  "ats": "greenhouse",
+  "slug": "affirm",
+  "sector": "tech"
+ },
+ {
+  "company": "Block",
+  "ats": "greenhouse",
+  "slug": "block",
+  "sector": "tech"
+ },
+ {
+  "company": "ClickHouse",
+  "ats": "ashby",
+  "slug": "clickhouse",
+  "sector": "tech"
+ },
+ {
+  "company": "Pinterest",
+  "ats": "greenhouse",
+  "slug": "pinterest",
+  "sector": "tech"
+ },
+ {
+  "company": "Lyft",
+  "ats": "greenhouse",
+  "slug": "lyft",
+  "sector": "tech"
+ },
+ {
+  "company": "IMC Trading",
+  "ats": "greenhouse",
+  "slug": "imc",
+  "sector": "tech"
+ },
+ {
+  "company": "Airbnb",
+  "ats": "greenhouse",
+  "slug": "airbnb",
+  "sector": "tech"
+ },
+ {
+  "company": "Figma",
+  "ats": "greenhouse",
+  "slug": "figma",
+  "sector": "tech"
+ },
+ {
+  "company": "Twilio",
+  "ats": "greenhouse",
+  "slug": "twilio",
+  "sector": "tech"
+ },
+ {
+  "company": "Reddit",
+  "ats": "greenhouse",
+  "slug": "reddit",
+  "sector": "tech"
+ },
+ {
+  "company": "Cohere",
+  "ats": "ashby",
+  "slug": "cohere",
+  "sector": "tech"
+ },
+ {
+  "company": "Ramp",
+  "ats": "ashby",
+  "slug": "ramp",
+  "sector": "tech"
+ },
+ {
+  "company": "Lightspeedhq",
+  "ats": "ashby",
+  "slug": "lightspeedhq",
+  "sector": "tech"
+ },
+ {
+  "company": "Tenstorrent",
+  "ats": "greenhouse",
+  "slug": "tenstorrent",
+  "sector": "tech"
+ },
+ {
+  "company": "Notion",
+  "ats": "ashby",
+  "slug": "notion",
+  "sector": "tech"
+ },
+ {
+  "company": "Robinhood",
+  "ats": "greenhouse",
+  "slug": "robinhood",
+  "sector": "tech"
+ },
+ {
+  "company": "Ripple",
+  "ats": "greenhouse",
+  "slug": "ripple",
+  "sector": "tech"
+ },
+ {
+  "company": "Perplexity",
+  "ats": "ashby",
+  "slug": "perplexity",
+  "sector": "tech"
+ },
+ {
+  "company": "Cerebras",
+  "ats": "ashby",
+  "slug": "cerebras",
+  "sector": "tech"
+ },
+ {
+  "company": "Plaid",
+  "ats": "ashby",
+  "slug": "plaid",
+  "sector": "tech"
+ },
+ {
+  "company": "Jump Trading",
+  "ats": "greenhouse",
+  "slug": "jumptrading",
+  "sector": "tech"
+ },
+ {
+  "company": "Instacart",
+  "ats": "greenhouse",
+  "slug": "instacart",
+  "sector": "tech"
+ },
+ {
+  "company": "Vanta",
+  "ats": "ashby",
+  "slug": "vanta",
+  "sector": "tech"
+ },
+ {
+  "company": "Asana",
+  "ats": "greenhouse",
+  "slug": "asana",
+  "sector": "tech"
+ },
+ {
+  "company": "Vercel",
+  "ats": "greenhouse",
+  "slug": "vercel",
+  "sector": "tech"
+ },
+ {
+  "company": "Mixpanel",
+  "ats": "greenhouse",
+  "slug": "mixpanel",
+  "sector": "tech"
+ },
+ {
+  "company": "Duolingo",
+  "ats": "greenhouse",
+  "slug": "duolingo",
+  "sector": "tech"
+ },
+ {
+  "company": "Dialpad",
+  "ats": "greenhouse",
+  "slug": "dialpad",
+  "sector": "tech"
+ },
+ {
+  "company": "Replit",
+  "ats": "ashby",
+  "slug": "replit",
+  "sector": "tech"
+ },
+ {
+  "company": "Spotify",
+  "ats": "lever",
+  "slug": "spotify",
+  "sector": "tech"
+ },
+ {
+  "company": "Tulip",
+  "ats": "greenhouse",
+  "slug": "tulip",
+  "sector": "tech"
+ },
+ {
+  "company": "Temporal",
+  "ats": "ashby",
+  "slug": "temporal",
+  "sector": "tech"
+ },
+ {
+  "company": "Faire",
+  "ats": "greenhouse",
+  "slug": "faire",
+  "sector": "tech"
+ },
+ {
+  "company": "Neo Financial",
+  "ats": "ashby",
+  "slug": "neofinancial",
+  "sector": "tech"
+ },
+ {
+  "company": "Docker",
+  "ats": "ashby",
+  "slug": "docker",
+  "sector": "tech"
+ },
+ {
+  "company": "Wealthsimple",
+  "ats": "ashby",
+  "slug": "wealthsimple",
+  "sector": "tech"
+ },
+ {
+  "company": "Supabase",
+  "ats": "ashby",
+  "slug": "supabase",
+  "sector": "tech"
+ },
+ {
+  "company": "1Password",
+  "ats": "ashby",
+  "slug": "1password",
+  "sector": "tech"
+ },
+ {
+  "company": "Blockstream",
+  "ats": "ashby",
+  "slug": "blockstream",
+  "sector": "tech"
+ },
+ {
+  "company": "Trulioo",
+  "ats": "ashby",
+  "slug": "trulioo",
+  "sector": "tech"
+ },
+ {
+  "company": "PagerDuty",
+  "ats": "greenhouse",
+  "slug": "pagerduty",
+  "sector": "tech"
+ },
+ {
+  "company": "Discord",
+  "ats": "greenhouse",
+  "slug": "discord",
+  "sector": "tech"
+ },
+ {
+  "company": "Sentry",
+  "ats": "ashby",
+  "slug": "sentry",
+  "sector": "tech"
+ },
+ {
+  "company": "Later",
+  "ats": "greenhouse",
+  "slug": "later",
+  "sector": "tech"
+ },
+ {
+  "company": "Dropbox",
+  "ats": "greenhouse",
+  "slug": "dropbox",
+  "sector": "tech"
+ },
+ {
+  "company": "Drata",
+  "ats": "ashby",
+  "slug": "drata",
+  "sector": "tech"
+ },
+ {
+  "company": "Miro",
+  "ats": "ashby",
+  "slug": "miro",
+  "sector": "tech"
+ },
+ {
+  "company": "Amplitude",
+  "ats": "ashby",
+  "slug": "amplitude",
+  "sector": "tech"
+ },
+ {
+  "company": "Jobber",
+  "ats": "ashby",
+  "slug": "jobber",
+  "sector": "tech"
+ },
+ {
+  "company": "Render",
+  "ats": "ashby",
+  "slug": "render",
+  "sector": "tech"
+ },
+ {
+  "company": "Sanity",
+  "ats": "ashby",
+  "slug": "sanity",
+  "sector": "tech"
+ },
+ {
+  "company": "D2L",
+  "ats": "greenhouse",
+  "slug": "d2l",
+  "sector": "tech"
+ },
+ {
+  "company": "Linear",
+  "ats": "ashby",
+  "slug": "linear",
+  "sector": "tech"
+ },
+ {
+  "company": "Squarespace",
+  "ats": "greenhouse",
+  "slug": "squarespace",
+  "sector": "tech"
+ },
+ {
+  "company": "Jane",
+  "ats": "ashby",
+  "slug": "jane",
+  "sector": "tech"
+ },
+ {
+  "company": "Webflow",
+  "ats": "greenhouse",
+  "slug": "webflow",
+  "sector": "tech"
+ },
+ {
+  "company": "Confluent",
+  "ats": "ashby",
+  "slug": "confluent",
+  "sector": "tech"
+ },
+ {
+  "company": "Cockroach Labs",
+  "ats": "greenhouse",
+  "slug": "cockroachlabs",
+  "sector": "tech"
+ },
+ {
+  "company": "Coursera",
+  "ats": "greenhouse",
+  "slug": "coursera",
+  "sector": "tech"
+ },
+ {
+  "company": "Apryse",
+  "ats": "lever",
+  "slug": "apryse",
+  "sector": "tech"
+ },
+ {
+  "company": "Redis",
+  "ats": "ashby",
+  "slug": "redis",
+  "sector": "tech"
+ },
+ {
+  "company": "Khan Academy",
+  "ats": "greenhouse",
+  "slug": "khanacademy",
+  "sector": "tech"
+ },
+ {
+  "company": "Float",
+  "ats": "ashby",
+  "slug": "float",
+  "sector": "tech"
+ },
+ {
+  "company": "Hootsuite",
+  "ats": "greenhouse",
+  "slug": "hootsuite",
+  "sector": "tech"
+ },
+ {
+  "company": "Airtable",
+  "ats": "greenhouse",
+  "slug": "airtable",
+  "sector": "tech"
+ },
+ {
+  "company": "Secureframe",
+  "ats": "ashby",
+  "slug": "secureframe",
+  "sector": "tech"
+ },
+ {
+  "company": "PlanetScale",
+  "ats": "greenhouse",
+  "slug": "planetscale",
+  "sector": "tech"
+ },
+ {
+  "company": "PostHog",
+  "ats": "ashby",
+  "slug": "posthog",
+  "sector": "tech"
+ },
+ {
+  "company": "Benevity",
+  "ats": "ashby",
+  "slug": "benevity",
+  "sector": "tech"
+ },
+ {
+  "company": "Circle",
+  "ats": "ashby",
+  "slug": "circle",
+  "sector": "tech"
+ },
+ {
+  "company": "Udemy",
+  "ats": "greenhouse",
+  "slug": "udemy",
+  "sector": "tech"
+ },
+ {
+  "company": "Shakepay",
+  "ats": "greenhouse",
+  "slug": "shakepay",
+  "sector": "tech"
+ },
+ {
+  "company": "Klue",
+  "ats": "ashby",
+  "slug": "klue",
+  "sector": "tech"
+ },
+ {
+  "company": "KOHO",
+  "ats": "ashby",
+  "slug": "koho",
+  "sector": "tech"
+ },
+ {
+  "company": "Railway",
+  "ats": "ashby",
+  "slug": "railway",
+  "sector": "tech"
+ },
+ {
+  "company": "Procurify",
+  "ats": "ashby",
+  "slug": "procurify",
+  "sector": "tech"
+ },
+ {
+  "company": "Wave",
+  "ats": "lever",
+  "slug": "waveapps",
+  "sector": "tech"
+ },
+ {
+  "company": "Zapier",
+  "ats": "ashby",
+  "slug": "zapier",
+  "sector": "tech"
+ },
+ {
+  "company": "Contentful",
+  "ats": "greenhouse",
+  "slug": "contentful",
+  "sector": "tech"
+ },
+ {
+  "company": "Neon",
+  "ats": "ashby",
+  "slug": "neon",
+  "sector": "tech"
+ },
+ {
+  "company": "Lightspeed",
+  "ats": "ashby",
+  "slug": "lightspeed",
+  "sector": "tech"
+ },
+ {
+  "company": "Runway",
+  "ats": "ashby",
+  "slug": "runway",
+  "sector": "tech"
+ },
+ {
+  "company": "Newton",
+  "ats": "lever",
+  "slug": "newton",
+  "sector": "tech"
+ },
+ {
+  "company": "Netlify",
+  "ats": "greenhouse",
+  "slug": "netlify",
+  "sector": "tech"
+ },
+ {
+  "company": "Fly",
+  "ats": "lever",
+  "slug": "fly",
+  "sector": "tech"
+ },
+ {
+  "company": "Thinkific",
+  "ats": "ashby",
+  "slug": "thinkific",
+  "sector": "tech"
+ },
+ {
+  "company": "Relay Financial",
+  "ats": "ashby",
+  "slug": "relayfi",
+  "sector": "finance"
+ },
+ {
+  "company": "Venn",
+  "ats": "ashby",
+  "slug": "venn",
+  "sector": "finance"
+ },
+ {
+  "company": "EQ Bank",
+  "ats": "lever",
+  "slug": "eqbank",
+  "sector": "finance"
+ },
+ {
+  "company": "Carta",
+  "ats": "greenhouse",
+  "slug": "carta",
+  "sector": "finance"
+ },
+ {
+  "company": "Achievers",
+  "ats": "lever",
+  "slug": "achievers",
+  "sector": "tech"
+ },
+ {
+  "company": "Versapay",
+  "ats": "lever",
+  "slug": "versapay",
+  "sector": "finance"
+ },
+ {
+  "company": "Mercury",
+  "ats": "greenhouse",
+  "slug": "mercury",
+  "sector": "finance"
+ },
+ {
+  "company": "Clearco",
+  "ats": "ashby",
+  "slug": "clearco",
+  "sector": "finance"
+ },
+ {
+  "company": "Paytm",
+  "ats": "lever",
+  "slug": "paytm",
+  "sector": "finance"
+ },
+ {
+  "company": "Plooto",
+  "ats": "lever",
+  "slug": "plooto",
+  "sector": "finance"
+ },
+ {
+  "company": "Grafana Labs",
+  "ats": "greenhouse",
+  "slug": "grafanalabs",
+  "sector": "tech"
+ },
+ {
+  "company": "Canonical",
+  "ats": "greenhouse",
+  "slug": "canonical",
+  "sector": "tech"
+ },
+ {
+  "company": "Mozilla",
+  "ats": "greenhouse",
+  "slug": "mozilla",
+  "sector": "tech"
+ },
+ {
+  "company": "Wikimedia Foundation",
+  "ats": "greenhouse",
+  "slug": "wikimedia",
+  "sector": "tech"
+ },
+ {
+  "company": "Tailscale",
+  "ats": "greenhouse",
+  "slug": "tailscale",
+  "sector": "tech"
+ },
+ {
+  "company": "Fivetran",
+  "ats": "greenhouse",
+  "slug": "fivetran",
+  "sector": "tech"
+ }
+]

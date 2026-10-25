@@ -1,0 +1,5 @@
+{"jobs":[
+ {"id":"6f0c1c2e-1111-4a5b-9c9d-000000000001","title":"Senior Software Engineer, Platform","location":"Remote","secondaryLocations":[],"isRemote":true,"workplaceType":"Remote","isListed":true,"publishedAt":"2026-10-21T12:00:00.000+00:00","jobUrl":"https://jobs.ashbyhq.com/wealthsimple/6f0c1c2e-1111-4a5b-9c9d-000000000001","descriptionPlain":"Own our Kubernetes platform.","compensation":{"summaryComponents":[{"compensationType":"Salary","minValue":170000,"maxValue":210000,"currencyCode":"CAD"}]}},
+ {"id":"6f0c1c2e-1111-4a5b-9c9d-000000000002","title":"Senior Software Engineer","location":"New York, NY","secondaryLocations":[{"location":"Montreal, QC"}],"isRemote":false,"workplaceType":"Hybrid","isListed":true,"publishedAt":"2026-10-19T12:00:00.000+00:00","jobUrl":"https://jobs.ashbyhq.com/wealthsimple/6f0c1c2e-1111-4a5b-9c9d-000000000002","descriptionPlain":"x"},
+ {"id":"6f0c1c2e-1111-4a5b-9c9d-000000000003","title":"Senior Software Engineer","location":"London, UK","isRemote":true,"workplaceType":"Remote","isListed":true,"publishedAt":"2026-10-19T12:00:00.000+00:00","jobUrl":"https://jobs.ashbyhq.com/wealthsimple/x3","descriptionPlain":"x"}
+]}

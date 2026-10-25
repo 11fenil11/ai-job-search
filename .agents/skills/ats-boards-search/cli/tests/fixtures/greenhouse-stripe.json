@@ -1,0 +1,8 @@
+{"jobs":[
+ {"id":101,"title":"Senior Software Engineer, Payments","location":{"name":"Toronto, ON"},"updated_at":"2026-10-20T10:00:00-04:00","first_published":"2026-10-18T10:00:00-04:00","absolute_url":"https://stripe.com/jobs/listing/101","content":"&lt;p&gt;Build &amp;amp; scale &lt;strong&gt;AWS&lt;/strong&gt; systems.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Python&lt;/li&gt;&lt;li&gt;Terraform&lt;/li&gt;&lt;/ul&gt;"},
+ {"id":102,"title":"Staff Infrastructure Engineer","location":{"name":"Remote - US"},"updated_at":"2026-10-22T10:00:00Z","absolute_url":"https://stripe.com/jobs/listing/102","content":""},
+ {"id":103,"title":"Senior Software Engineer","location":{"name":"San Francisco, CA"},"updated_at":"2026-10-22T10:00:00Z","absolute_url":"https://stripe.com/jobs/listing/103","content":""},
+ {"id":104,"title":"Senior Software Engineer","location":{"name":"Remote - EMEA"},"updated_at":"2026-10-22T10:00:00Z","absolute_url":"https://stripe.com/jobs/listing/104","content":""},
+ {"id":105,"title":"Account Executive","location":{"name":"Toronto, ON"},"updated_at":"2026-10-22T10:00:00Z","absolute_url":"https://stripe.com/jobs/listing/105","content":""},
+ {"id":106,"title":"Senior Backend Engineer","location":{"name":"Vancouver, BC"},"updated_at":"2025-01-02T10:00:00Z","absolute_url":"https://stripe.com/jobs/listing/106","content":""}
+]}

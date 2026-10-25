@@ -1,0 +1,70 @@
+# Daily job feed: Canada + US-remote software roles from Greenhouse, Ashby and
+# Lever boards, via .agents/skills/ats-boards-search.
+#
+# Why a workflow: Claude Code cloud sessions sit behind an egress proxy that
+# refuses every job board, while GitHub's runners reach them freely. So the
+# fetch runs here and commits job_scraper/feed/latest.json to the branch it ran
+# on; a session then reads the file with `git pull` and ranks it locally.
+#
+# The feed holds public job postings only - nothing from the candidate profile
+# goes into it, so committing it to a public fork leaks nothing.
+
+name: Job feed
+
+on:
+  schedule:
+    - cron: "37 10 * * *" # 10:37 UTC = 06:37 Toronto (EDT)
+  workflow_dispatch:
+  push:
+    paths:
+      - ".agents/skills/ats-boards-search/**"
+      - ".github/workflows/job-feed.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: job-feed-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+
+      - name: Fetch Canada + US-remote engineering roles
+        working-directory: .agents/skills/ats-boards-search/cli
+        run: |
+          mkdir -p ../../../../job_scraper/feed
+          bun run src/cli.ts search \
+            -q "engineer|developer|sre|devops|architect" \
+            --region both --jobage 45 --limit 5000 --with-description \
+            > ../../../../job_scraper/feed/latest.json
+          python3 - <<'PY'
+          import json
+          d = json.load(open("../../../../job_scraper/feed/latest.json"))
+          m = d["meta"]
+          ca = sum(1 for j in d["results"] if j["region"] == "canada")
+          print(f"::notice::{m['count']} roles ({ca} Canada, {m['count'] - ca} US-remote) from {m['boards']} boards, {len(m['boards_failed'])} failed")
+          PY
+
+      - name: Commit the feed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REF_NAME: ${{ github.ref_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          git config user.name "job-feed bot"
+          git config user.email "noreply@github.com"
+          git add -f job_scraper/feed/latest.json
+          if git diff --cached --quiet; then
+            echo "feed unchanged"
+            exit 0
+          fi
+          git commit -m "chore(feed): refresh Canada + US-remote job feed"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" "HEAD:${REF_NAME}"
