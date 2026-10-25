@@ -17,12 +17,25 @@ describe("classifyRegion", () => {
     ["Remote - EMEA", null],
     ["Remote, India", null],
     ["London, UK", null],
+    ["US-TX-Remote", "us-remote"],
+    ["Remote, Global", "us-remote"],
+    ["Remote-NAMER", "us-remote"],
+    ["Remote Finland", null],
+    ["NZ-New Zealand-Remote", null],
+    ["San Francisco, CA, US; Remote, US", "us-remote"],
   ])("%s -> %s", (loc, want) => {
     expect(classifyRegion(loc)).toBe(want as never)
   })
 
-  test("an ATS remote flag with a bare city outside NA stays out of scope", () => {
+  test("an ATS remote flag does not override a named city", () => {
     expect(classifyRegion("Berlin, Germany", true)).toBeNull()
+    expect(classifyRegion("San Francisco", true)).toBeNull()
+    expect(classifyRegion("São Paulo", true)).toBeNull()
+  })
+
+  test("an ATS remote flag with a country-only location reads as US-remote", () => {
+    expect(classifyRegion("United States", true)).toBe("us-remote")
+    expect(classifyRegion("United States", false)).toBeNull()
   })
 
   test("an ATS remote flag with no location reads as US-remote", () => {

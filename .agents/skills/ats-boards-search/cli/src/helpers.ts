@@ -115,29 +115,49 @@ const CA_PLACES = [
 ]
 const CA_PROVINCE = /,\s*(on|bc|qc|ab|ns|mb|sk|nb|nl|pe)\b/i
 const REMOTE = /\b(remote|anywhere|distributed|work from home|wfh)\b/i
-const US_SCOPE = /\b(us|u\.s\.|usa|united states|north america|americas|amer|nam)\b/i
-// Remote postings scoped somewhere that is neither the US nor Canada.
-const NON_NA = /\b(emea|europe|uk|united kingdom|germany|france|spain|poland|netherlands|ireland|india|apac|asia|japan|australia|singapore|brazil|latam|mexico|israel|portugal|romania)\b/i
+const US_SCOPE = /\b(us|u\.s\.|usa|united states|north america|americas|amer|namer|nam)\b/i
+// A remote posting scoped to a country or city that is neither the US nor Canada.
+const NON_NA = new RegExp(
+  "\\b(" +
+    [
+      "emea", "europe", "uk", "united kingdom", "england", "london", "ireland", "dublin", "germany", "berlin",
+      "munich", "france", "paris", "spain", "madrid", "barcelona", "portugal", "lisbon", "italy", "milan",
+      "netherlands", "amsterdam", "belgium", "switzerland", "zurich", "austria", "vienna", "poland", "warsaw",
+      "czech", "prague", "romania", "hungary", "bulgaria", "serbia", "greece", "ukraine", "turkey", "istanbul",
+      "sweden", "stockholm", "norway", "denmark", "copenhagen", "finland", "estonia", "latvia", "lithuania",
+      "israel", "tel aviv", "dubai", "uae", "saudi", "africa", "nigeria", "kenya", "egypt",
+      "india", "bangalore", "bengaluru", "hyderabad", "pune", "mumbai", "delhi", "chennai",
+      "apac", "asia", "japan", "tokyo", "korea", "seoul", "china", "shanghai", "beijing", "hong kong", "taiwan",
+      "singapore", "malaysia", "indonesia", "philippines", "vietnam", "thailand", "australia", "sydney",
+      "melbourne", "new zealand", "latam", "mexico", "brazil", "são paulo", "sao paulo", "argentina",
+      "colombia", "chile", "peru", "uruguay", "costa rica",
+    ].join("|") +
+    ")\\b",
+  "i",
+)
+// A location that names a country-level scope and no city.
+const COUNTRY_ONLY = /^\s*(united states|usa|us|u\.s\.|north america|americas)?\s*$/i
 
 /** Classify a posting's location string into the search's target regions.
  *
  *  - canada:    names a Canadian place, or "Remote - Canada".
- *  - us-remote: remote and scoped to the US / North America / Americas, or a
- *               bare "Remote" (US companies on these boards almost always mean
- *               US-remote by it; the caller sees `location` and can judge).
- *  - null:      on-site in the US, or remote somewhere else.
+ *  - us-remote: "remote" (or distributed / anywhere) appears in the location
+ *               text and it is not scoped to another country - "Remote - US",
+ *               "US-TX-Remote", "Remote, Global", a bare "Remote".
+ *  - null:      on-site anywhere outside Canada, or remote somewhere else.
+ *
+ *  The ATS's own remote flag (`remoteHint`) only counts when the location names
+ *  no city: Ashby sets `isRemote` on on-site San Francisco and São Paulo
+ *  postings alike, so trusting it put both in the US-remote list.
  *
  *  Multi-location strings ("Toronto; San Francisco") count as Canada when any
  *  part is Canadian, since an applicant there can take the Canadian seat. */
 export function classifyRegion(location: string | null | undefined, remoteHint = false): Region | null {
-  if (!location && !remoteHint) return null
-  const loc = ` ${(location ?? "").toLowerCase()} `
+  const raw = location ?? ""
+  const loc = ` ${raw.toLowerCase()} `
   if (CA_PLACES.some((p) => loc.includes(p)) || CA_PROVINCE.test(loc)) return "canada"
-  const remote = remoteHint || REMOTE.test(loc)
-  if (!remote) return null
-  if (US_SCOPE.test(loc)) return "us-remote"
-  if (NON_NA.test(loc)) return null
-  // Bare "Remote" with nothing else, or a US-state-only list.
+  if (!REMOTE.test(loc)) return remoteHint && COUNTRY_ONLY.test(raw) ? "us-remote" : null
+  if (NON_NA.test(loc) && !US_SCOPE.test(loc)) return null
   return "us-remote"
 }
 
