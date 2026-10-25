@@ -63,6 +63,13 @@ class FeedRankTest(unittest.TestCase):
         self.assertGreater(jobs["a"], jobs["b"])
         self.assertGreater(jobs["a"], jobs["c"])
 
+    def test_undeclared_required_language_blocks(self):
+        [j] = self.rank(job(title="Cloud Support Engineer - Japanese Speaking"))
+        self.assertEqual(j["score"]["verdict"], "blocked")
+        self.assertIn("requires Japanese", j["score"]["reasons"])
+        self.assertEqual(feed_rank.required_language("Bilingual (English/French) is an asset", {"english"}), "french")
+        self.assertIsNone(feed_rank.required_language("Fluent in French required", {"english", "french"}))
+
     def test_duplicate_urls_collapse(self):
         self.assertEqual(len(self.rank(job(), job())), 1)
 

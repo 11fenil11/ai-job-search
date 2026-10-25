@@ -13,7 +13,8 @@ Inputs (any mix, deduplicated by URL):
                      title/company/location/url/description and posted_at|date
   --profile <file>   candidate profile JSON: {"skills": {group: [skill, ...]},
                      "experience": [{"title", "start": "YYYY-MM", "end"}],
-                     optional "years_experience" and "off_track" (title regex)}
+                     optional "years_experience", "languages" (default
+                     ["english"]) and "off_track" (title regex)}
                      Keep it outside the repo (or gitignored) - it is personal.
 
 Output: JSON {"generated", "candidate_years", "jobs": [...]} sorted best first.
@@ -22,15 +23,17 @@ Scoring (0-100):
   skills   = (0.6 * matched/named + 0.4 * min(matched, 8)/8) * min(named, 4)/4
              over the technologies the posting names that the profile vocabulary
              knows - a posting naming one skill carries no signal
-  then     - 15 when the title is outside the candidate's track (off_track)
+  then     - 30 when the title is outside the candidate's track (off_track)
            - capped recency deduction (0 / 3 / 7 / 12 / 18 points by age)
            - 25 when the title is above the candidate's level
            - 10 per year the stated requirement exceeds the candidate by more than 2
   verdict  "blocked" on a hard knockout (clearance, citizenship, PhD, a 3+ year
-           experience gap), else strong >= 65, good >= 50, stretch below.
+           experience gap, a required language the profile does not list), else strong >= 65, good >= 50, stretch below.
 
 US-remote postings that require US work authorization are flagged, not blocked:
-only the candidate knows their status.
+only the candidate knows their status. `open_to_canada` marks US-remote postings
+whose location names Canada, North America or a global scope, or whose text
+says it hires remotely in Canada.
 """
 
 import argparse
@@ -72,9 +75,19 @@ _HARD = [
     (re.compile(r"\bPh\.?D\.?\s+(?:is\s+)?required\b|\brequires?\s+a\s+Ph\.?D\b", re.I), "requires a PhD"),
 ]
 _US_AUTH = re.compile(
-    r"authori[sz]ed to work in the (?:U\.?S\.?|United States)|"
-    r"(?:must|need to) (?:be )?(?:reside|located|based|live) in the (?:U\.?S\.?|United States)|"
-    r"(?:will not|cannot|unable to) (?:provide |offer )?(?:visa )?sponsor", re.I)
+    r"(?:eligible|authori[sz]ed|legally able|permitted) to work in the (?:U\.?S\.?|United States)|"
+    r"(?:reside|located|based|live|living) (?:in|within) the (?:U\.?S\.?|United States|continental US)|"
+    r"\bU\.?S\.?[- ]based\b|US work authori[sz]ation|"
+    r"(?:will not|cannot|unable to|do not|does not|not able to) (?:\w+ ){0,3}sponsor", re.I)
+# A US-remote posting that says it hires in Canada too.
+_OPEN_TO_CANADA_LOC = re.compile(r"canad|north america|namer|americas|anywhere|global|worldwide", re.I)
+_OPEN_TO_CANADA_TEXT = re.compile(
+    r"(?:U\.?S\.?|United States|USA)\s*(?:or|and|/|&)\s*Canada|Canada\s*(?:or|and|/|&)\s*(?:the\s+)?(?:U\.?S\.?|United States|USA)|"
+    r"remote[^.\n]{0,60}\bCanada\b|\bCanada\b[^.\n]{0,40}\bremote", re.I)
+_LANGS = "french|japanese|german|spanish|mandarin|cantonese|korean|portuguese|italian|dutch|polish|arabic|hebrew"
+_LANG_REQ = re.compile(
+    rf"\b({_LANGS})[- ]speaking\b|\bfluen(?:t|cy) in ({_LANGS})\b|\b({_LANGS}) (?:is |are )?(?:required|mandatory|essential)\b|"
+    rf"\bbilingual\b(?:[^.\n]{{0,30}}\b({_LANGS}))?", re.I)
 _RANGE = re.compile(r"(\d{1,2})\s*(?:-|–|to)\s*(\d{1,2})\s*\+?\s*years?", re.I)
 _YEARS = re.compile(
     r"(\d{1,2})\s*\+\s*years?|(?:minimum|at least)\s*(?:of\s*)?(\d{1,2})\s*years?|"
@@ -83,7 +96,7 @@ _ABOVE = re.compile(r"\b(principal|distinguished|fellow|director|head\s+of|vp)\b
 _STAFF = re.compile(r"\b(staff|lead|architect)\b", re.I)
 # Role families a backend / cloud / platform engineer is rarely shortlisted for,
 # however much of the stack overlaps. Override with "off_track" in the profile.
-OFF_TRACK = r"data scientist|mobile|\bios\b|android|front[- ]?end|designer|\bux\b|research scientist|hardware|firmware|sales engineer|solutions? engineer"
+OFF_TRACK = r"data scientist|mobile|\bios\b|android|front[- ]?end|designer|\bux\b|research scientist|hardware|firmware|sales|solutions? (?:engineer|architect)|analytics engineer|\bmanager\b|account executive|recruit"
 _CANADA = re.compile(
     r"canada|\bcan\b|toronto|vancouver|montr[eé]al|ottawa|calgary|edmonton|waterloo|kitchener|"
     r"mississauga|winnipeg|halifax|victoria|quebec|qu[eé]bec|ontario|british columbia|alberta|"
@@ -137,7 +150,17 @@ def recency_penalty(posted, today):
     return 18
 
 
-def score(job, pats, have, years, today, off_track):
+def required_language(text, spoken):
+    """The first required language the candidate has not declared, or None.
+    A bare "bilingual" in a Canadian posting means English and French."""
+    for m in _LANG_REQ.finditer(text):
+        lang = next((g for g in m.groups() if g), "french").lower()
+        if lang not in spoken:
+            return lang
+    return None
+
+
+def score(job, pats, have, years, today, off_track, spoken):
     text = f"{job['title']}\n{job.get('description') or ''}"
     named = sorted(k for k, p in pats.items() if p.search(text))
     matched = [k for k in named if k in have]
@@ -150,6 +173,10 @@ def score(job, pats, have, years, today, off_track):
         if rx.search(text):
             reasons.append(why)
             blocked = True
+    lang = required_language(text, spoken)
+    if lang:
+        reasons.append(f"requires {lang.capitalize()}")
+        blocked = True
     req = required_years(job.get("description"))
     if req is not None and years:
         gap = req - years
@@ -168,7 +195,7 @@ def score(job, pats, have, years, today, off_track):
         pct -= 8
     if off_track.search(title):
         reasons.append("role family outside your track")
-        pct -= 15
+        pct -= 30
     if _JUNIOR.search(title):
         reasons.append("junior/associate title - below your level")
         pct -= 20
@@ -176,12 +203,15 @@ def score(job, pats, have, years, today, off_track):
     pct = max(0, min(100, pct))
 
     flags = []
-    if job.get("region") == "us-remote" and _US_AUTH.search(text):
-        flags.append("needs US work authorization / residency")
+    open_to_canada = None
+    if job.get("region") == "us-remote":
+        open_to_canada = bool(_OPEN_TO_CANADA_LOC.search(job.get("location") or "") or _OPEN_TO_CANADA_TEXT.search(text))
+        if _US_AUTH.search(text):
+            flags.append("needs US work authorization / residency")
     verdict = "blocked" if blocked else "strong" if pct >= 65 else "good" if pct >= 50 else "stretch"
     return {"pct": pct, "verdict": verdict, "matched": matched,
             "missing": [k for k in named if k not in have], "reasons": reasons,
-            "flags": flags, "required_years": req}
+            "flags": flags, "open_to_canada": open_to_canada, "required_years": req}
 
 
 def normalise(raw, source):
@@ -242,10 +272,11 @@ def main(argv=None):
     # A stated figure wins: date arithmetic cannot see part-time or overlapping work.
     years = float(profile.get("years_experience") or candidate_years(profile, today))
     off_track = re.compile(profile.get("off_track") or OFF_TRACK, re.I)
+    spoken = {l.lower() for l in profile.get("languages") or ["english"]}
 
     ranked = []
     for j in load(args):
-        j["score"] = score(j, pats, have, years, today, off_track)
+        j["score"] = score(j, pats, have, years, today, off_track, spoken)
         if not args.keep_description:
             j["description"] = (j["description"] or "")[:400]
         ranked.append(j)
